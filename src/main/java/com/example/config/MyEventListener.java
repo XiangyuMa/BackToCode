@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.config;
 
 
 import org.springframework.boot.context.event.ApplicationReadyEvent;
