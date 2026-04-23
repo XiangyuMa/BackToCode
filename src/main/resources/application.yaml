@@ -6,4 +6,15 @@ spring:
     username: root
     password: mxy713914
     driver-class-name: com.mysql.cj.jdbc.Driver
+  # MyBatis 配置
+  mybatis:
+    configuration:
+      # 控制台输出 SQL 日志
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+logging:
+  level:
+    # MyBatis 的详细日志
+    com.example.mapper: trace
+    # 或者全局开启 DEBUG
+    root: debug
