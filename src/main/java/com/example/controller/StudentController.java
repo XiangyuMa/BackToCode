@@ -27,6 +27,9 @@ public class StudentController {
     public Result updateStatus(){
         return  Result.success(studentService.batchUpdate());
     }
-
+    @GetMapping("/delete")
+    public Result deleteGirl(){
+        return  Result.success(studentService.deleteStudent());
+    }
 
 }

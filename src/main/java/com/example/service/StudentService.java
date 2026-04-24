@@ -32,4 +32,13 @@ public class StudentService {
         studentMapper.updateByExampleSelective(updateStudent, example);
         return 0;
     }
+
+    public int deleteStudent(){
+        StudentExample example = new StudentExample();
+        example.createCriteria().andGenderEqualTo( "女");
+        Student updateStudent = new Student();
+        updateStudent.setIsDeleted(true);
+        studentMapper.updateByExampleSelective(updateStudent, example);
+        return 0;
+    }
 }

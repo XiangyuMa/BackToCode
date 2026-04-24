@@ -51,6 +51,11 @@
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>4.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.5.3.1</version>
+		</dependency>
 		<!-- MySQL 示例 -->
 		<dependency>
 			<groupId>mysql</groupId>
