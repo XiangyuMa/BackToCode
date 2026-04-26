@@ -1,13 +1,12 @@
 package com.example.controller;
 
+import com.example.dto.StudentDto;
 import com.example.entity.Student;
 import com.example.service.StudentService;
 import com.example.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +29,10 @@ public class StudentController {
     @GetMapping("/delete")
     public Result deleteGirl(){
         return  Result.success(studentService.deleteStudent());
+    }
+    @PostMapping("/student")
+    public Result createStudent(@RequestBody StudentDto studentDto) {
+        return studentService.createStudent(studentDto);
     }
 
 }
