@@ -1,6 +1,8 @@
 spring:
   application:
     name: demo
+  profiles:
+    active: dev   # 根据环境切换
   datasource:
     url: jdbc:mysql://localhost:3306/school?allowPublicKeyRetrieval=true&useSSL=true&serverTimezone=UTC&characterEncoding=UTF-8
     username: root
@@ -12,9 +14,19 @@ spring:
       # 控制台输出 SQL 日志
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+# 日志配置
 logging:
+  # 使用外部配置文件 logback-spring.xml，此处只定义变量供其引用
+  config: classpath:logback-spring.xml
+  # 日志级别
   level:
+    root: INFO
+    com.example: DEBUG
     # MyBatis 的详细日志
     com.example.mapper: trace
-    # 或者全局开启 DEBUG
-    root: debug
+    # 业务包级别
+    org.springframework.web: WARN
+  # 输出格式
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file:   "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

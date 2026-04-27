@@ -5,6 +5,7 @@ import com.example.entity.Student;
 import com.example.entity.StudentExample;
 import com.example.mapper.StudentMapper;
 import com.example.util.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Logger;
 
+
+@Slf4j
 @Service
 public class StudentService {
 
@@ -26,7 +28,6 @@ public class StudentService {
     @Autowired
     private TransactionTemplate transactionTemplate;
 
-    private Logger log = Logger.getLogger("studentService");
 
 
     public List<Student> getAllStudent() {
@@ -61,10 +62,14 @@ public class StudentService {
      * @return 学号
      */
     public Result createStudent(StudentDto studentDto) {
-        // 1. 生成业务唯一学生号（规则：时间戳 + 用户ID后缀 + 随机数）
-        String studentNo = generateOrderNo(Long.valueOf(studentDto.getStudentNo()));
-        log.info("学号是： " + studentNo);
+        if (studentDto == null){
+            return  Result.error("学生信息必须完整！");
+        }
 
+        // 1. 生成业务唯一学生号（规则：时间戳 + 用户ID后缀 + 随机数）
+//        String studentNo = generateOrderNo(Long.valueOf(studentDto.getStudentNo()));
+        String studentNo = studentDto.getStudentNo();
+        log.info("学生创建成功, studentNo={}", studentNo); // INFO级别
         try {
             // 2. 在事务中执行
             return transactionTemplate.execute(status -> {
@@ -86,7 +91,7 @@ public class StudentService {
 
                 } catch (DuplicateKeyException e) {
                     // 学生信息已存在，说明是重复请求
-                    log.warning("学号已存在，可能是重复请求, studentNo: " + studentNo);
+                    log.warn("学号已存在，可能是重复请求, studentNo={}", studentNo);
 
                     // 查询已存在的订单返回
                     StudentExample example = new StudentExample();
@@ -97,7 +102,7 @@ public class StudentService {
             });
 
         } catch (Exception e) {
-            log.warning("创建学生信息失败!");
+            log.warn("创建学生信息失败!");
             return Result.error("existingStudent");
         }
     }
